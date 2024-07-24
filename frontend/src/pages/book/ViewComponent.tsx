@@ -6,6 +6,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { ToastContainer, toast } from "react-toastify";
 import { logout } from "../../services/AuthService";
+import { Button } from "react-bootstrap";
 
 const ViewComponent = () => {
   const { id } = useParams();
@@ -82,7 +83,10 @@ const ViewComponent = () => {
             </p>
           </Col>
         </Row>
-        
+        <Row>
+          <Button type="button" className="btn btn-primary">Request Book</Button>
+          <Button type="button" className="btn btn-secondary">Return Book</Button>
+        </Row>
       </div>
     </Container>
   );

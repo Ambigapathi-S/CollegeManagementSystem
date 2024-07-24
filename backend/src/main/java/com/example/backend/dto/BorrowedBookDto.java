@@ -23,8 +23,6 @@ public class BorrowedBookDto {
 
     private LocalDate returnDate;
 
-    private String genre;
-
     private Book book;
 
     private Member member;

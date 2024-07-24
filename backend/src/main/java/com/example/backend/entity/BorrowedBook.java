@@ -27,9 +27,6 @@ public class BorrowedBook {
     @Column(nullable = true)
     private LocalDate returnDate;
 
-    @Column(nullable = false)
-    private String genre;
-
     @ManyToOne
     @JoinColumn(name = "book_id")
     private Book book;

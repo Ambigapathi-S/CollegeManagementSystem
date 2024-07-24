@@ -5,5 +5,5 @@ import com.example.backend.entity.BorrowedBook;
 
 public interface BorrowedBookService {
     BorrowedBookDto saveBorrowedBook(BorrowedBookDto borrowedBookDto);
-    BorrowedBookDto returnBorrowedBook(BorrowedBookDto borrowedBookDto);
+    BorrowedBookDto returnBorrowedBook(Long id, BorrowedBookDto borrowedBookDto);
 }
