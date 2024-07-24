@@ -1,0 +1,83 @@
+* {
+  box-sizing: border-box;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  font-family: var(--inter-font);
+}
+
+header {
+  background-color: var(--primary);
+  color: var(--white);
+  padding: 15px;
+  text-align: center;
+}
+
+header h1 {
+  display: inline-block;
+  font-size: 25px;
+  font-weight: 700;
+  margin: 0;
+  width: 150px;
+  text-align: left;
+}
+
+header h4 {
+  display: inline-block;
+  font-size: 25px;
+  font-weight: 600;
+  margin: 0;
+  width: calc(100% - 150px);
+}
+
+footer {
+  background: var(--footer);
+  color: var(--white);
+  padding: 5px;
+  text-align: center;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+footer p {
+  opacity: 0.6;
+  margin: 0;
+  letter-spacing: .3px;
+  font-size: 12px;
+}
+
+.dashboardUI {
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(100% - 200px);
+  list-style: none;
+  gap: 1rem;
+}
+
+.dashboardUI li {
+  padding: 1rem;
+  text-align: center;
+  font-weight: 600;
+  font-size: 20px;
+  margin: 0;
+  border-radius: var(--border-radius);
+}
+
+.dashboardUI li p {
+  margin: 0;
+}
+
+.dashboardUI li:nth-child(1) {
+  background: var(--primary-light);
+  color: var(--primary);
+}
+
+.dashboardUI li:nth-child(2) {
+  background: var(--secondary-light);
+  color: var(--secondary);
+}
+
