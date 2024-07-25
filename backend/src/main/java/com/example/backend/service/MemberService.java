@@ -1,7 +1,6 @@
 package com.example.backend.service;
 
-import com.example.backend.dto.BookDto;
-import com.example.backend.dto.MemberDto;
+import com.example.backend.dto.*;
 import com.example.backend.entity.Book;
 import com.example.backend.entity.Member;
 
@@ -16,5 +15,5 @@ public interface MemberService {
     List<MemberDto> getAllMembers();
     MemberDto getMemberById(Long id);
     Optional<List<Member>> searchMembers(String name, String email, String phoneNumber);
-
+    JwtMemberResponse MemberLogin(MemberLoginDto memberLoginDto);
 }

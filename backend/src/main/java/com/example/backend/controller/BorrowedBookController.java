@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin("*")
 @RestController
 @AllArgsConstructor
@@ -21,10 +23,27 @@ public class BorrowedBookController {
         return new ResponseEntity<>(savedBorrowedBook, HttpStatus.CREATED);
     }
 
-    @PutMapping("return/{id}")
-    public ResponseEntity<BorrowedBookDto> returnBorrowedBook(@PathVariable("id") Long id, @RequestBody BorrowedBookDto borrowedBookDto) {
-        BorrowedBookDto returnedBorrowedBook = borrowedBookService.returnBorrowedBook(id, borrowedBookDto);
+    @PutMapping("borrow/{id}")
+    public ResponseEntity<BorrowedBookDto> ChangeBorrowedBookStatus(@PathVariable("id") Long id, @RequestBody BorrowedBookDto borrowedBookDto) {
+        BorrowedBookDto returnedBorrowedBook = borrowedBookService.ChangeBorrowedBookStatus(id, borrowedBookDto);
         return ResponseEntity.ok(returnedBorrowedBook);
     }
 
+    @GetMapping
+    public ResponseEntity<List<BorrowedBookDto>> getAllBorrowBookList() {
+        List<BorrowedBookDto> borrowedBookDtos = borrowedBookService.getAllBorrowBookList();
+        return ResponseEntity.ok().body(borrowedBookDtos);
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity<BorrowedBookDto> getBorrowBookListById(@PathVariable("id") Long id) {
+        BorrowedBookDto borrowedBookDto = borrowedBookService.getBorrowBookListById(id);
+        return ResponseEntity.ok().body(borrowedBookDto);
+    }
+
+    @GetMapping("filter")
+    public ResponseEntity<BorrowedBookDto> getBorrowListByBookIDAndMemberID(@RequestParam("book_id") Long book_id, @RequestParam("member_id") Long member_id) {
+        BorrowedBookDto borrowedBookDto = borrowedBookService.getBorrowListByBookIDAndMemberID(book_id,member_id);
+        return ResponseEntity.ok().body(borrowedBookDto);
+    }
 }

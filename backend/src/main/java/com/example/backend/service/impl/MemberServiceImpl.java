@@ -1,7 +1,6 @@
 package com.example.backend.service.impl;
 
-import com.example.backend.dto.BookDto;
-import com.example.backend.dto.MemberDto;
+import com.example.backend.dto.*;
 import com.example.backend.entity.Book;
 import com.example.backend.entity.Member;
 import com.example.backend.entity.Role;
@@ -75,5 +74,21 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public Optional<List<Member>> searchMembers(String name, String email, String phoneNumber) {
         return memberRepository.findMemberByParams(name, email, phoneNumber);
+    }
+
+    @Override
+    public JwtMemberResponse MemberLogin(MemberLoginDto memberLoginDto) {
+
+        Optional<Member> userOptional = memberRepository.findByEmail(memberLoginDto.getEmail());
+
+        String role = "ROLE_MEMBER";
+        Member member = null;
+        if (userOptional.isPresent()) {
+            member = userOptional.get();
+        }
+        JwtMemberResponse jwtMemberResponse = new JwtMemberResponse();
+        jwtMemberResponse.setRole(role);
+        jwtMemberResponse.setMember(member);
+        return jwtMemberResponse;
     }
 }

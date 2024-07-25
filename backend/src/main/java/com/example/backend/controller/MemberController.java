@@ -1,6 +1,6 @@
 package com.example.backend.controller;
 
-import com.example.backend.dto.MemberDto;
+import com.example.backend.dto.*;
 import com.example.backend.entity.Book;
 import com.example.backend.entity.Member;
 import com.example.backend.service.MemberService;
@@ -55,5 +55,11 @@ public class MemberController {
                                                                 @RequestParam(required = false) String phoneNumber) {
         Optional<List<Member>> members = memberService.searchMembers(name, email, phoneNumber);
         return ResponseEntity.ok(members);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<JwtMemberResponse> MemberLogin(@RequestBody MemberLoginDto memberLoginDto) {
+        JwtMemberResponse jwtMemberResponse = memberService.MemberLogin(memberLoginDto);
+        return ResponseEntity.ok(jwtMemberResponse);
     }
 }

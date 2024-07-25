@@ -2,6 +2,7 @@ package com.example.backend.repository;
 
 import com.example.backend.entity.Book;
 import com.example.backend.entity.Member;
+import com.example.backend.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -19,4 +20,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
             + " AND (?3 IS NULL OR b.phoneNumber = ?3)"
             , nativeQuery = false)
     Optional<List<Member>> findMemberByParams(String name, String email, String phoneNumber);
+
+    Optional<Member> findByEmail(String email);
 }

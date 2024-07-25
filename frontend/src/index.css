@@ -282,6 +282,11 @@ button.btn.btn-back {
   letter-spacing: -1px;
 }
 
+.ListUI .button-group {
+  display: flex;
+  gap: 10px;
+}
+
 .ListUI .head {
   margin-bottom: 1rem;
 }

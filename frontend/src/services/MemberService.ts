@@ -30,3 +30,6 @@ export const deleteMember = (id: number) =>
 
 export const search = (name:string, email:string, phoneNumber: string) =>
   axios.get(AUTH_REST_API_URL + "/search?name=" + name + "&email=" + email + "&phoneNumber=" + phoneNumber);
+
+export const MemberLoginApi = (email: string, phoneNumber: string) =>
+  axios.post(AUTH_REST_API_URL + "/login", { email, phoneNumber });

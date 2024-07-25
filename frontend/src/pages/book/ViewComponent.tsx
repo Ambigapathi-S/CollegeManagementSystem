@@ -5,12 +5,20 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { ToastContainer, toast } from "react-toastify";
-import { logout } from "../../services/AuthService";
+import {
+  getLoggedInUser,
+  isAdminUser,
+  logout,
+} from "../../services/AuthService";
 import { Button } from "react-bootstrap";
+import { saveBorrowedBook } from "../../services/BorrowedBookService";
+import { search } from "../../services/MemberService";
 
 const ViewComponent = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const isAdmin = isAdminUser();
+  const userName = getLoggedInUser();
   const [BookDetails, setBookDetails] = useState({
     id: "",
     title: "",
@@ -18,7 +26,7 @@ const ViewComponent = () => {
     isbn: "",
     genre: "",
     publication_date: "",
-    copies_available: ""
+    copies_available: "",
   });
 
   useEffect(() => {
@@ -40,17 +48,61 @@ const ViewComponent = () => {
     };
     fetchData();
   }, [id]);
-  
 
+  const [status, setStatus] = useState("");
+  const RequestForBook = async (id: string) => {
+    try {
+      const Book = BookDetails;
+      const resp = await search("%", userName ? userName : "", "%");
+      const Member = resp?.data[0];
+      let BorrowedReq = {
+        book: Book,
+        member: Member,
+        issueDate: "",
+        dueDate: "",
+        returnDate: "",
+        status: "pending",
+      };
+      const response = await saveBorrowedBook(BorrowedReq);
+      if (response.status === 200 || response.status === 201) {
+        toast("Book Request has been sent to Admin!", { type: "success" });
+        setStatus(response.data.status);
+      } else if (response.status === 403) {
+        logout();
+        navigate("/login");
+      } else {
+        toast("Error");
+      }
+    } catch (error: any) {
+      let resMsg = error?.response?.data.message;
+      toast(resMsg);
+    }
+  };
   return (
     <Container>
       <ToastContainer />
       <div className="ListUI">
         <div className="head d-flex justify-content-between align-items-center">
           <h3 className="title-h3">Book Details #{BookDetails.id}</h3>
+          <div className="button-group">
+            {!isAdmin && (
+              <>
+                <Button
+                  type="button"
+                  className="btn btn-success"
+                  onClick={() => RequestForBook(BookDetails.id)}
+                >
+                  Request Book
+                </Button>
+                <Button type="button" className="btn btn-warning">
+                  Return Book
+                </Button>
+              </>
+            )}
             <a href="/books-list" className="btn btn-back">
               Back to List
             </a>
+          </div>
         </div>
 
         <Row>
@@ -67,6 +119,12 @@ const ViewComponent = () => {
               <label>ISBN: </label>
               <span>&nbsp;{BookDetails.isbn}</span>
             </p>
+            {status && (
+              <p>
+                <label>Status: </label>
+                <span>&nbsp; {status}</span>
+              </p>
+            )}
           </Col>
           <Col xs={12} md={6} sm={6} lg={6}>
             <p>
@@ -82,10 +140,6 @@ const ViewComponent = () => {
               <span>&nbsp;{BookDetails.copies_available}</span>
             </p>
           </Col>
-        </Row>
-        <Row>
-          <Button type="button" className="btn btn-primary">Request Book</Button>
-          <Button type="button" className="btn btn-secondary">Return Book</Button>
         </Row>
       </div>
     </Container>

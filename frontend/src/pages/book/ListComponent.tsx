@@ -93,10 +93,14 @@ const ListComponent = () => {
   };
 
   const reset = async () => {
-    setSearchTitle(""); setSearchAuthor(""); setSearchIsbn("");
-    setSearchGenre(""); setSearchPublicationDate(""); setSearchCopiesAvailable(0);
+    setSearchTitle("");
+    setSearchAuthor("");
+    setSearchIsbn("");
+    setSearchGenre("");
+    setSearchPublicationDate("");
+    setSearchCopiesAvailable(0);
     callBookListApi();
-  }
+  };
   return (
     <>
       <Container>
@@ -190,78 +194,82 @@ const ListComponent = () => {
                 >
                   Search
                 </button>
-                <button type="button" className="btn btn-reset" onClick={() => reset()}>Reset</button>
+                <button
+                  type="button"
+                  className="btn btn-reset"
+                  onClick={() => reset()}
+                >
+                  Reset
+                </button>
               </div>
             </div>
           </div>
-          {isAdmin && (
-            <div className="table-responsive">
-              <Table bordered>
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Title</th>
-                    <th>Author</th>
-                    <th>ISBN</th>
-                    <th>Genre</th>
-                    <th>Pulbication Date</th>
-                    <th>Available Copies</th>
-                    <th className="text-center">Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {BookList.map((Book: any, index) => (
-                    <tr key={Book.id}>
-                      <td>{index + 1}</td>
-                      <td>{Book.title}</td>
-                      <td>{Book.author}</td>
-                      <td>{Book.isbn}</td>
-                      <td>{Book.genre}</td>
-                      <td>{Book.publication_date}</td>
-                      <td>{Book.copies_available}</td>
-                      <td className="action-icons text-center">
-                        {isAdmin && (
-                          <span className="edit tooltip">
-                            <button onClick={() => updateBook(Book.id)}>
-                              <span className="icon">
-                                <FaRegEdit />
-                              </span>
-                              <span className="tooltiptext">Update</span>
-                            </button>
-                          </span>
-                        )}
-                        {isAdmin && (
-                          <span className="delete tooltip">
-                            <button onClick={() => removeBook(Book.id)}>
-                              <span className="icon">
-                                <MdDeleteOutline />
-                              </span>
-                              <span className="tooltiptext">Delete</span>
-                            </button>
-                          </span>
-                        )}
-                        <span className="view tooltip">
-                          <button onClick={() => viewBook(Book.id)}>
+          <div className="table-responsive">
+            <Table bordered>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Title</th>
+                  <th>Author</th>
+                  <th>ISBN</th>
+                  <th>Genre</th>
+                  <th>Pulbication Date</th>
+                  <th>Available Copies</th>
+                  <th className="text-center">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {BookList.map((Book: any, index) => (
+                  <tr key={Book.id}>
+                    <td>{index + 1}</td>
+                    <td>{Book.title}</td>
+                    <td>{Book.author}</td>
+                    <td>{Book.isbn}</td>
+                    <td>{Book.genre}</td>
+                    <td>{Book.publication_date}</td>
+                    <td>{Book.copies_available}</td>
+                    <td className="action-icons text-center">
+                      {isAdmin && (
+                        <span className="edit tooltip">
+                          <button onClick={() => updateBook(Book.id)}>
                             <span className="icon">
-                              <CiViewList />
+                              <FaRegEdit />
                             </span>
-                            <span className="tooltiptext">View</span>
+                            <span className="tooltiptext">Update</span>
                           </button>
                         </span>
-                      </td>
-                    </tr>
-                  ))}
-                  {!BookList.length && (
-                    <tr>
-                      <td colSpan={8} className="text-center">
-                        No Book Found
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </Table>
-            </div>
-          )}
+                      )}
+                      {isAdmin && (
+                        <span className="delete tooltip">
+                          <button onClick={() => removeBook(Book.id)}>
+                            <span className="icon">
+                              <MdDeleteOutline />
+                            </span>
+                            <span className="tooltiptext">Delete</span>
+                          </button>
+                        </span>
+                      )}
+                      <span className="view tooltip">
+                        <button onClick={() => viewBook(Book.id)}>
+                          <span className="icon">
+                            <CiViewList />
+                          </span>
+                          <span className="tooltiptext">View</span>
+                        </button>
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+                {!BookList.length && (
+                  <tr>
+                    <td colSpan={8} className="text-center">
+                      No Book Found
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </Table>
+          </div>
         </div>
       </Container>
     </>

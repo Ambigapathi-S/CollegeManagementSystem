@@ -18,14 +18,17 @@ public class BorrowedBook {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column
     private LocalDate issueDate;
 
-    @Column(nullable = false)
+    @Column
     private LocalDate dueDate;
 
-    @Column(nullable = true)
+    @Column
     private LocalDate returnDate;
+
+    @Column
+    private String status;
 
     @ManyToOne
     @JoinColumn(name = "book_id")

@@ -6,7 +6,11 @@ import { MdDeleteOutline } from "react-icons/md";
 import { CiViewList } from "react-icons/ci";
 import { isAdminUser } from "../../services/AuthService";
 import { useNavigate } from "react-router-dom";
-import { deleteMember, getAllMembers, search } from "../../services/MemberService";
+import {
+  deleteMember,
+  getAllMembers,
+  search,
+} from "../../services/MemberService";
 
 const ListMember = () => {
   const [MemberList, setMemberList] = useState<any[]>([]);
@@ -54,8 +58,7 @@ const ListMember = () => {
   const searchList = async (
     name: string,
     email: string,
-    phoneNumber: string,
-    
+    phoneNumber: string
   ) => {
     try {
       if (name === "" || name === null) {
@@ -67,12 +70,8 @@ const ListMember = () => {
       if (phoneNumber === "" || phoneNumber === null) {
         phoneNumber = "%";
       }
-      
-      const response = await search(
-        name,
-        email,
-        phoneNumber
-      );
+
+      const response = await search(name, email, phoneNumber);
       setMemberList(response.data);
     } catch (error) {
       console.error(error);
@@ -80,9 +79,11 @@ const ListMember = () => {
   };
 
   const reset = async () => {
-    setSearchName(""); setSearchEmail(""); setSearchPhoneNumber("");
+    setSearchName("");
+    setSearchEmail("");
+    setSearchPhoneNumber("");
     callMemberListApi();
-  }
+  };
   return (
     <>
       <Container>
@@ -132,81 +133,81 @@ const ListMember = () => {
                   type="button"
                   className="btn btn-back"
                   onClick={() =>
-                    searchList(
-                      searchName,
-                      searchEmail,
-                      searchPhoneNumber
-                    )
+                    searchList(searchName, searchEmail, searchPhoneNumber)
                   }
                 >
                   Search
                 </button>
-                <button type="button" className="btn btn-reset" onClick={() => reset()}>Reset</button>
+                <button
+                  type="button"
+                  className="btn btn-reset"
+                  onClick={() => reset()}
+                >
+                  Reset
+                </button>
               </div>
             </div>
           </div>
-          {isAdmin && (
-            <div className="table-responsive">
-              <Table bordered>
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Phone Number</th>
-                    <th className="text-center">Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {MemberList.map((Member: any, index) => (
-                    <tr key={Member.id}>
-                      <td>{index + 1}</td>
-                      <td>{Member.name}</td>
-                      <td>{Member.email}</td>
-                      <td>{Member.phoneNumber}</td>
-                      <td className="action-icons text-center">
-                        {isAdmin && (
-                          <span className="edit tooltip">
-                            <button onClick={() => updateMember(Member.id)}>
-                              <span className="icon">
-                                <FaRegEdit />
-                              </span>
-                              <span className="tooltiptext">Update</span>
-                            </button>
-                          </span>
-                        )}
-                        {isAdmin && (
-                          <span className="delete tooltip">
-                            <button onClick={() => removeMember(Member.id)}>
-                              <span className="icon">
-                                <MdDeleteOutline />
-                              </span>
-                              <span className="tooltiptext">Delete</span>
-                            </button>
-                          </span>
-                        )}
-                        <span className="view tooltip">
-                          <button onClick={() => viewMember(Member.id)}>
+          <div className="table-responsive">
+            <Table bordered>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Phone Number</th>
+                  <th className="text-center">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {MemberList.map((Member: any, index) => (
+                  <tr key={Member.id}>
+                    <td>{index + 1}</td>
+                    <td>{Member.name}</td>
+                    <td>{Member.email}</td>
+                    <td>{Member.phoneNumber}</td>
+                    <td className="action-icons text-center">
+                      {isAdmin && (
+                        <span className="edit tooltip">
+                          <button onClick={() => updateMember(Member.id)}>
                             <span className="icon">
-                              <CiViewList />
+                              <FaRegEdit />
                             </span>
-                            <span className="tooltiptext">View</span>
+                            <span className="tooltiptext">Update</span>
                           </button>
                         </span>
-                      </td>
-                    </tr>
-                  ))}
-                  {!MemberList.length && (
-                    <tr>
-                      <td colSpan={8} className="text-center">
-                        No Member Found
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </Table>
-            </div>
-          )}
+                      )}
+                      {isAdmin && (
+                        <span className="delete tooltip">
+                          <button onClick={() => removeMember(Member.id)}>
+                            <span className="icon">
+                              <MdDeleteOutline />
+                            </span>
+                            <span className="tooltiptext">Delete</span>
+                          </button>
+                        </span>
+                      )}
+                      <span className="view tooltip">
+                        <button onClick={() => viewMember(Member.id)}>
+                          <span className="icon">
+                            <CiViewList />
+                          </span>
+                          <span className="tooltiptext">View</span>
+                        </button>
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+                {!MemberList.length && (
+                  <tr>
+                    <td colSpan={8} className="text-center">
+                      No Member Found
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </Table>
+          </div>
         </div>
       </Container>
     </>

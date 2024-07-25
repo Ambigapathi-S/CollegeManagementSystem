@@ -26,4 +26,6 @@ public class BorrowedBookDto {
     private Book book;
 
     private Member member;
+
+    private String status;
 }

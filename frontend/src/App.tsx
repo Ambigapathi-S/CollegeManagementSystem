@@ -14,6 +14,7 @@ import ViewComponent from "./pages/book/ViewComponent";
 import AddEditMember from "./pages/member/AddEditMember";
 import ListMember from "./pages/member/ListMember";
 import ViewMember from "./pages/member/ViewMember";
+import MemberLogin from "./pages/member/MemberLogin";
 
 function App() {
   function AuthenticatedRoute({ children }: any) {
@@ -34,6 +35,7 @@ function App() {
             <Route element={<LayoutComponent />}>
               <Route path="/" element={<LoginComponent />}></Route>
               <Route path="/login" element={<LoginComponent />}></Route>
+              <Route path="/member-login" element={<MemberLogin />}></Route>
               <Route path="/dashboard" element={<DashboardComponent />}></Route>
 
               <Route

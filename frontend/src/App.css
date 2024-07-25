@@ -81,3 +81,13 @@ footer p {
   color: var(--secondary);
 }
 
+p.clickHerePara {
+  font-size: 13px;
+  text-align: right;
+  color: var(--gray);
+  font-weight: 500;
+}
+
+a.clickHere {
+  color: var(--primary);
+}
