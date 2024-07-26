@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin("*")
 @RestController
@@ -42,8 +43,14 @@ public class BorrowedBookController {
     }
 
     @GetMapping("filter")
-    public ResponseEntity<BorrowedBookDto> getBorrowListByBookIDAndMemberID(@RequestParam("book_id") Long book_id, @RequestParam("member_id") Long member_id) {
-        BorrowedBookDto borrowedBookDto = borrowedBookService.getBorrowListByBookIDAndMemberID(book_id,member_id);
+    public ResponseEntity<Optional<BorrowedBookDto>> getBorrowListByBookIDAndMemberID(@RequestParam("book_id") Long book_id, @RequestParam("member_id") Long member_id) {
+        Optional<BorrowedBookDto> borrowedBookDto = borrowedBookService.getBorrowListByBookIDAndMemberID(book_id,member_id);
+        return ResponseEntity.ok().body(borrowedBookDto);
+    }
+
+    @GetMapping("find")
+    public ResponseEntity<List<BorrowedBookDto>> getAllBorrowBookListByStatus(@RequestParam("status") String status) {
+        List<BorrowedBookDto> borrowedBookDto = borrowedBookService.getAllBorrowBookListByStatus(status);
         return ResponseEntity.ok().body(borrowedBookDto);
     }
 }

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container, ToastContainer } from "react-bootstrap";
+import { Col, Container, Row, ToastContainer } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -10,12 +10,18 @@ import { logout } from "../../services/AuthService";
 
 const BookSchema = yup
   .object({
+    id:yup.number().notRequired(),
     title: yup.string().required("Title is Required!"),
     author: yup.string().required("Author is Required!"),
     isbn: yup.string().required("ISBN is Required!"),
     genre: yup.string().required("Genre is Required!"),
     publication_date: yup.string().required("Publication Date is Required!"),
-    copies_available: yup.number().required("Available Copies are Required!"),
+    copies_available: yup
+      .number()
+      .typeError("Copies available must be a number")
+      .integer("Copies available must be an integer")
+      .positive("Copies available must be positive")
+      .required("Available Copies are Required!"),
   })
   .required();
 
@@ -55,6 +61,7 @@ const AddEditComponent = () => {
   }, [id]);
 
   function setValues(data: any) {
+    setValue("id", data.id);
     setValue("title", data.title);
     setValue("author", data.author);
     setValue("isbn", data.isbn);
@@ -107,56 +114,66 @@ const AddEditComponent = () => {
           </a>
         </div>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="form-group">
-            <input
-              {...register("title")}
-              placeholder="Title"
-              className={`form-control ${errors.title ? "error" : ""} `}
-            />
-            <p className="error">{errors.title?.message}</p>
-          </div>
-          <div className="form-group">
-            <input
-              {...register("author")}
-              placeholder="Author"
-              className={`form-control ${errors.author ? "error" : ""} `}
-            />
-            <p className="error">{errors.author?.message}</p>
-          </div>
-          <div className="form-group">
-            <input
-              {...register("isbn")}
-              placeholder="ISBN"
-              className={`form-control ${errors.isbn ? "error" : ""} `}
-            />
-            <p className="error">{errors.isbn?.message}</p>
-          </div>
-          <div className="form-group">
-            <input
-              {...register("genre")}
-              placeholder="Genre"
-              className={`form-control ${errors.genre ? "error" : ""} `}
-            />
-            <p className="error">{errors.genre?.message}</p>
-          </div>
-          <div className="form-group">
-            <input
-              {...register("publication_date")}
-              placeholder="publication_date"
-              type="date"
-              className={`form-control ${errors.publication_date ? "error" : ""} `}
-            />
-            <p className="error">{errors.publication_date?.message}</p>
-          </div>
-          <div className="form-group">
-            <input
-              {...register("copies_available")}
-              placeholder="Copies Available"
-              type="number"
-              className={`form-control ${errors.copies_available ? "error" : ""} `}
-            />
-            <p className="error">{errors.copies_available?.message}</p>
-          </div>
+          <Row>
+            <Col xs={12} md={6} sm={6} lg={6}>
+              <div className="form-group">
+                <input
+                  {...register("title")}
+                  placeholder="Title"
+                  className={`form-control ${errors.title ? "error" : ""} `}
+                />
+                <p className="error">{errors.title?.message}</p>
+              </div>
+              <div className="form-group">
+                <input
+                  {...register("author")}
+                  placeholder="Author"
+                  className={`form-control ${errors.author ? "error" : ""} `}
+                />
+                <p className="error">{errors.author?.message}</p>
+              </div>
+              <div className="form-group">
+                <input
+                  {...register("isbn")}
+                  placeholder="ISBN"
+                  className={`form-control ${errors.isbn ? "error" : ""} `}
+                />
+                <p className="error">{errors.isbn?.message}</p>
+              </div>
+            </Col>
+            <Col xs={12} md={6} sm={6} lg={6}>
+              <div className="form-group">
+                <input
+                  {...register("genre")}
+                  placeholder="Genre"
+                  className={`form-control ${errors.genre ? "error" : ""} `}
+                />
+                <p className="error">{errors.genre?.message}</p>
+              </div>
+              <div className="form-group">
+                <input
+                  {...register("publication_date")}
+                  placeholder="publication_date"
+                  type="date"
+                  className={`form-control ${
+                    errors.publication_date ? "error" : ""
+                  } `}
+                />
+                <p className="error">{errors.publication_date?.message}</p>
+              </div>
+              <div className="form-group">
+                <input
+                  {...register("copies_available")}
+                  placeholder="Copies Available"
+                  type="number"
+                  className={`form-control ${
+                    errors.copies_available ? "error" : ""
+                  } `}
+                />
+                <p className="error">{errors.copies_available?.message}</p>
+              </div>
+            </Col>
+          </Row>
           <div className="text-center">
             <input type="submit" className="btn btn-primary" />
           </div>

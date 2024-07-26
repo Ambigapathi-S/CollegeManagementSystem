@@ -85,9 +85,16 @@ public class BorrowedBookServiceImpl implements BorrowedBookService {
     }
 
     @Override
-    public BorrowedBookDto getBorrowListByBookIDAndMemberID(Long book_id, Long member_id) {
-        BorrowedBook borrowedBook = borrowedBookRepository.findByBookIdAndMemberId(book_id, member_id)
-                .orElseThrow(() -> new ResourceNotFoundException("Borrow Book", "id", book_id));
-        return modelMapper.map(borrowedBook, BorrowedBookDto.class);
+    public Optional<BorrowedBookDto> getBorrowListByBookIDAndMemberID(Long book_id, Long member_id) {
+        Optional<BorrowedBook> borrowedBook = borrowedBookRepository.findByBookIdAndMemberId(book_id, member_id);
+        System.out.println(borrowedBook);
+        return Optional.ofNullable(modelMapper.map(borrowedBook, BorrowedBookDto.class));
+    }
+
+    @Override
+    public List<BorrowedBookDto> getAllBorrowBookListByStatus(String status) {
+        return borrowedBookRepository.findAllByStatus(status)
+                .stream().map(borrow -> modelMapper.map(borrow, BorrowedBookDto.class))
+                .collect(Collectors.toList());
     }
 }

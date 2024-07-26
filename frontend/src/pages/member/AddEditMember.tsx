@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { Container, ToastContainer } from "react-bootstrap";
+import { Col, Container, Row, ToastContainer } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { getMemberById, saveMember, updateMember } from "../../services/MemberService";
+import {
+  getMemberById,
+  saveMember,
+  updateMember,
+} from "../../services/MemberService";
 import { toast } from "react-toastify";
 import { logout } from "../../services/AuthService";
 
 const MemberSchema = yup
   .object({
+    id: yup.number().notRequired(),
     name: yup.string().required("Name is Required!"),
     email: yup.string().email().required("Email Address is Required!"),
     phoneNumber: yup.string().required("Phone Number is Required!"),
@@ -52,6 +57,7 @@ const AddEditMember = () => {
   }, [id]);
 
   function setValues(data: any) {
+    setValue("id", data.id);
     setValue("name", data.name);
     setValue("email", data.email);
     setValue("phoneNumber", data.phoneNumber);
@@ -101,30 +107,36 @@ const AddEditMember = () => {
           </a>
         </div>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="form-group">
-            <input
-              {...register("name")}
-              placeholder="Name"
-              className={`form-control ${errors.name ? "error" : ""} `}
-            />
-            <p className="error">{errors.name?.message}</p>
-          </div>
-          <div className="form-group">
-            <input
-              {...register("email")}
-              placeholder="Email"
-              className={`form-control ${errors.email ? "error" : ""} `}
-            />
-            <p className="error">{errors.email?.message}</p>
-          </div>
-          <div className="form-group">
-            <input
-              {...register("phoneNumber")}
-              placeholder="Phone Number"
-              className={`form-control ${errors.phoneNumber ? "error" : ""} `}
-            />
-            <p className="error">{errors.phoneNumber?.message}</p>
-          </div>
+          <Row>
+            <Col xs={12} md={6} sm={6} lg={6}>
+              <div className="form-group">
+                <input
+                  {...register("name")}
+                  placeholder="Name"
+                  className={`form-control ${errors.name ? "error" : ""} `}
+                />
+                <p className="error">{errors.name?.message}</p>
+              </div>
+              <div className="form-group">
+                <input
+                  {...register("email")}
+                  placeholder="Email"
+                  className={`form-control ${errors.email ? "error" : ""} `}
+                />
+                <p className="error">{errors.email?.message}</p>
+              </div>
+              <div className="form-group">
+                <input
+                  {...register("phoneNumber")}
+                  placeholder="Phone Number"
+                  className={`form-control ${
+                    errors.phoneNumber ? "error" : ""
+                  } `}
+                />
+                <p className="error">{errors.phoneNumber?.message}</p>
+              </div>
+            </Col>
+          </Row>
           <div className="text-center">
             <input type="submit" className="btn btn-primary" />
           </div>

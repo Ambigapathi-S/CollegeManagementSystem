@@ -7,7 +7,6 @@ import LoginComponent from "./pages/auth/LoginComponent";
 import PageNotFound from "./pages/common/PageNotFound";
 import FooterComponent from "./pages/common/FooterComponent";
 import HeaderComponent from "./pages/common/HeaderComponent";
-import NavbarComponent from "./pages/common/NavbarComponent";
 import AddEditComponent from "./pages/book/AddEditComponent";
 import ListComponent from "./pages/book/ListComponent";
 import ViewComponent from "./pages/book/ViewComponent";
@@ -15,6 +14,8 @@ import AddEditMember from "./pages/member/AddEditMember";
 import ListMember from "./pages/member/ListMember";
 import ViewMember from "./pages/member/ViewMember";
 import MemberLogin from "./pages/member/MemberLogin";
+import BorrowListComponent from "./pages/BorrowBook/BorrowListComponent";
+import UpdateBorrowStatus from "./pages/BorrowBook/UpdateBorrowStatus";
 
 function App() {
   function AuthenticatedRoute({ children }: any) {
@@ -103,6 +104,23 @@ function App() {
                   </AuthenticatedRoute>
                 }
               ></Route>
+              <Route
+                path="/borrow-list"
+                element={
+                  <AuthenticatedRoute>
+                    <BorrowListComponent />
+                  </AuthenticatedRoute>
+                }
+              ></Route>
+              <Route
+                path="/borrow/update/:id"
+                element={
+                  <AuthenticatedRoute>
+                    <UpdateBorrowStatus />
+                  </AuthenticatedRoute>
+                }
+              ></Route>
+
               <Route path="*" element={<PageNotFound />}></Route>
             </Route>
           </Routes>

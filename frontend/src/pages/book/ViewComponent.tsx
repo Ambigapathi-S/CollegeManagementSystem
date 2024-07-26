@@ -11,7 +11,10 @@ import {
   logout,
 } from "../../services/AuthService";
 import { Button } from "react-bootstrap";
-import { saveBorrowedBook } from "../../services/BorrowedBookService";
+import {
+  getBorrowListByBookIDAndMemberID,
+  saveBorrowedBook,
+} from "../../services/BorrowedBookService";
 import { search } from "../../services/MemberService";
 
 const ViewComponent = () => {
@@ -19,6 +22,7 @@ const ViewComponent = () => {
   const navigate = useNavigate();
   const isAdmin = isAdminUser();
   const userName = getLoggedInUser();
+  let isPendingBook = true;
   const [BookDetails, setBookDetails] = useState({
     id: "",
     title: "",
@@ -28,13 +32,26 @@ const ViewComponent = () => {
     publication_date: "",
     copies_available: "",
   });
-
+  const [bookStatus, setBookStatus] = useState("");
   useEffect(() => {
     const fetchData = async () => {
       try {
         if (id) {
           let ids = Number(id);
           const response = await getBookById(ids);
+          if (!isAdmin) {
+            const member = await search("%", userName ? userName : "", "%");
+            const memberID = member.data[0].id;
+            const bookStatus = await getBorrowListByBookIDAndMemberID(
+              ids,
+              memberID
+            );
+            if (bookStatus.data != null) {
+              setBookStatus(bookStatus.data.status);
+            } else {
+              setBookStatus("");
+            }
+          }
           setBookDetails(response.data);
         }
       } catch (error: any) {
@@ -49,7 +66,6 @@ const ViewComponent = () => {
     fetchData();
   }, [id]);
 
-  const [status, setStatus] = useState("");
   const RequestForBook = async (id: string) => {
     try {
       const Book = BookDetails;
@@ -66,7 +82,7 @@ const ViewComponent = () => {
       const response = await saveBorrowedBook(BorrowedReq);
       if (response.status === 200 || response.status === 201) {
         toast("Book Request has been sent to Admin!", { type: "success" });
-        setStatus(response.data.status);
+        navigate("/borrow-list");
       } else if (response.status === 403) {
         logout();
         navigate("/login");
@@ -85,7 +101,7 @@ const ViewComponent = () => {
         <div className="head d-flex justify-content-between align-items-center">
           <h3 className="title-h3">Book Details #{BookDetails.id}</h3>
           <div className="button-group">
-            {!isAdmin && (
+            {!isAdmin && bookStatus !== "pending" && (
               <>
                 <Button
                   type="button"
@@ -94,10 +110,10 @@ const ViewComponent = () => {
                 >
                   Request Book
                 </Button>
-                <Button type="button" className="btn btn-warning">
-                  Return Book
-                </Button>
               </>
+            )}
+            {!isAdmin && bookStatus === "pending" && (
+              <span>*Already Book Requested Status : {bookStatus}</span>
             )}
             <a href="/books-list" className="btn btn-back">
               Back to List
@@ -119,12 +135,6 @@ const ViewComponent = () => {
               <label>ISBN: </label>
               <span>&nbsp;{BookDetails.isbn}</span>
             </p>
-            {status && (
-              <p>
-                <label>Status: </label>
-                <span>&nbsp; {status}</span>
-              </p>
-            )}
           </Col>
           <Col xs={12} md={6} sm={6} lg={6}>
             <p>
