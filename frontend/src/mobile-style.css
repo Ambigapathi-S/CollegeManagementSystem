@@ -1,0 +1,55 @@
+@media (max-width:767px) {
+
+    header h1,
+    header h4 {
+        width: 100%;
+        text-align: center;
+    }
+
+    header h4 {
+        font-size: 18px;
+    }
+
+    .FormUI {
+        width: 100%;
+    }
+
+    nav.bg-primary {
+        display: none;
+    }
+
+    .dashboardUI {
+        gap: 10px;
+    }
+
+    .dashboardUI li {
+        width: 48%;
+    }
+
+    .dashboardUI li span svg {
+        font-size: 30px;
+    }
+
+    .dashboardUI li p {
+        font-size: 15px;
+        line-height: 18px;
+    }
+
+    .dashboardUI li p:last-child {
+        font-size: 40px;
+        line-height: 40px;
+        font-weight: 700;
+    }
+
+    .mob-center {
+        text-align: center;
+    }
+
+    #root .content {
+        height: auto;
+    }
+
+    footer {
+        background: var(--secondary);
+    }
+}

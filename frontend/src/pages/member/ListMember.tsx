@@ -128,7 +128,7 @@ const ListMember = () => {
                   onChange={(e) => setSearchPhoneNumber(e.target.value)}
                 />
               </div>
-              <div className="col-xs-12 col-sm-3 col-md-3 col-lg-3 mb-3">
+              <div className="col-xs-12 col-sm-3 col-md-3 col-lg-3 mb-3 mob-center">
                 <button
                   type="button"
                   className="btn btn-back"

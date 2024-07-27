@@ -1,4 +1,5 @@
 import "./App.css";
+import "./mobile-style.css";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { isUserLoggedIn } from "./services/AuthService";
 import LayoutComponent from "./pages/common/LayoutComponent";
