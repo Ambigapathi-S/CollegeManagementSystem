@@ -3,6 +3,12 @@ import SearchComponent from "./SearchComponent";
 import { getAllBooks } from "../../services/BookService";
 import { getAllMembers } from "../../services/MemberService";
 import { getAllBorrowBookListByStatus } from "../../services/BorrowedBookService";
+import { IoBookSharp } from "react-icons/io5";
+import { FaUserCheck } from "react-icons/fa6";
+import { MdOutlinePendingActions } from "react-icons/md";
+import { GiReturnArrow } from "react-icons/gi";
+import { FaHandHolding } from "react-icons/fa";
+import { Container } from "react-bootstrap";
 
 const HomeComponent = () => {
   const [BookCount, setBookCount] = useState(0);
@@ -65,33 +71,52 @@ const HomeComponent = () => {
 
   return (
     <>
-      <div className="dashboard">
-        <div className="head">
-          <h1>Dashboard</h1>
+      <Container>
+        <div className="ListUI">
+          <div className="head d-flex justify-content-between align-items-center">
+            <h3 className="title-h3">Dashboard</h3>
+          </div>
+          <div className="dashboard">
+            <ul className="dashboardUI">
+              <li>
+                <span>
+                  <IoBookSharp />
+                </span>
+                <p>Total Books Count</p>
+                <p>{BookCount}</p>
+              </li>
+              <li>
+                <span>
+                  <FaUserCheck />
+                </span>
+                <p>Total Members Count</p>
+                <p>{MemberCount}</p>
+              </li>
+              <li>
+                <span>
+                  <FaHandHolding />
+                </span>
+                <p>Borrowed Book Count</p>
+                <p>{BorrowedCount}</p>
+              </li>
+              <li>
+                <span>
+                  <GiReturnArrow />
+                </span>
+                <p>Returned Book Count</p>
+                <p>{ReturnedCount}</p>
+              </li>
+              <li>
+                <span>
+                  <MdOutlinePendingActions />
+                </span>
+                <p>Pending Book Count</p>
+                <p>{PendingCount}</p>
+              </li>
+            </ul>
+          </div>
         </div>
-        <ul className="dashboardUI">
-          <li>
-            <p>Total Books Count</p>
-            <p>{BookCount}</p>
-          </li>
-          <li>
-            <p>Total Members Count</p>
-            <p>{MemberCount}</p>
-          </li>
-          <li>
-            <p>Borrowed Book Count</p>
-            <p>{BorrowedCount}</p>
-          </li>
-          <li>
-            <p>Returned Book Count</p>
-            <p>{ReturnedCount}</p>
-          </li>
-          <li>
-            <p>Pending Book Count</p>
-            <p>{PendingCount}</p>
-          </li>
-        </ul>
-      </div>
+      </Container>
     </>
   );
 };

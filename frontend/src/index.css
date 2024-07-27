@@ -40,7 +40,7 @@ body {
   position: relative;
   overflow-x: hidden;
   font-family: var(--inter-font);
-  background-color: #ebebeb !important;
+  background-color: var(--white) !important;
 }
 
 #root {
@@ -71,21 +71,23 @@ body {
 nav.bg-primary {
   background-color: var(--secondary) !important;
   display: block;
-  width: 200px;
+  width: 250px;
 }
 
 #root .content {
   display: flex;
   height: 100%;
+  background-image: linear-gradient(to right, var(--primary), var(--primary-dark));
 }
 
 nav.navbar-expand .navbar-nav {
   flex-direction: column;
+  padding: 5px;
 }
 
 nav.navbar-expand .navbar-nav .nav-link {
   color: var(--white);
-  padding: 10px;
+  padding: 10px 15px;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -93,14 +95,12 @@ nav.navbar-expand .navbar-nav .nav-link {
 
 nav.navbar-expand .navbar-nav .nav-link.active {
   background-color: var(--primary);
+  border-radius: 20px;
 }
 
-nav.navbar-expand .navbar-nav span {
-  display: flex;
-}
-
-nav.navbar-expand .navbar-nav span svg {
+nav.navbar-expand .navbar-nav svg {
   color: var(--white);
+  font-size: 18px;
 }
 
 button.btn.btn-primary,
@@ -311,15 +311,15 @@ button.btn.btn-back:hover {
 ::-webkit-scrollbar {
   width: 5px;
   height: 5px;
-  background-color: var(--primary);
+  background-color: var(--light-gray);
 }
 
 .ListUI {
-  padding: 15px 30px;
+  padding: 15px 20px;
   background: var(--white);
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow-header);
-  margin: 1.5rem 1rem;
+  margin: 1.5rem .5rem;
 }
 
 .ListUI .title-h3 {

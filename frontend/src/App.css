@@ -7,8 +7,8 @@
 }
 
 header {
-  background-color: var(--primary);
-  color: var(--white);
+  background-color: var(--white);
+  color: var(--primary);
   padding: 15px;
   text-align: center;
 }
@@ -31,7 +31,7 @@ header h4 {
 }
 
 footer {
-  background: var(--footer);
+  background: #ffffff17;
   color: var(--white);
   padding: 5px;
   text-align: center;
@@ -42,10 +42,11 @@ footer {
 }
 
 footer p {
-  opacity: 0.6;
+  opacity: 0.7;
   margin: 0;
   letter-spacing: .3px;
   font-size: 12px;
+  font-weight: 200;
 }
 
 .dashboard {
@@ -69,8 +70,9 @@ footer p {
   align-items: center;
   justify-content: center;
   list-style: none;
-  gap: 1rem;
+  gap: 2rem;
   flex-wrap: wrap;
+  height: -moz-fit-content;
   height: fit-content;
 }
 
@@ -82,6 +84,26 @@ footer p {
   margin: 0;
   border-radius: var(--border-radius);
   width: 25%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  height: 200px;
+  justify-content: space-evenly;
+}
+
+.dashboardUI li span svg {
+  font-size: 45px;
+}
+
+.dashboardUI li p {
+  font-size: 20px;
+  line-height: 20px;
+}
+
+.dashboardUI li p:last-child {
+  font-size: 50px;
+  line-height: 50px;
+  font-weight: 700;
 }
 
 .dashboardUI li p {
