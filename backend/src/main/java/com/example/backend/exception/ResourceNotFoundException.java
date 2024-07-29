@@ -9,6 +9,7 @@ public class ResourceNotFoundException extends RuntimeException {
     private String fieldName;
     private Long fieldValue;
     private String fieldVal;
+    private String comments;
 
     public ResourceNotFoundException(String resourceName, String fieldName, Long fieldValue) {
         super(String.format("%s not found with %s : '%s'" , resourceName, fieldName, fieldValue));
@@ -22,5 +23,10 @@ public class ResourceNotFoundException extends RuntimeException {
         this.resourceName = resourceName;
         this.fieldName = fieldName;
         this.fieldVal = fieldVal;
+    }
+
+    public ResourceNotFoundException(String comments) {
+        super(String.format("%s" , comments));
+        this.comments = comments;
     }
 }

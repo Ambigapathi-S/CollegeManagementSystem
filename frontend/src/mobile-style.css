@@ -1,4 +1,7 @@
 @media (max-width:767px) {
+    body {
+        background-image: linear-gradient(to right, var(--primary), var(--primary-dark));
+    }
 
     header h1,
     header h4 {
@@ -16,6 +19,15 @@
 
     nav.bg-primary {
         display: none;
+        transition: all .3s ease-in-out;
+        height: 0;
+        overflow: hidden;
+    }
+
+    nav.bg-primary.active {
+        display: block;
+        width: 100%;
+        height: auto;
     }
 
     .dashboardUI {
@@ -47,9 +59,30 @@
 
     #root .content {
         height: auto;
+        display: block;
     }
 
     footer {
         background: var(--secondary);
+        position: relative;
+    }
+
+    .mob-display {
+        display: block !important;
+    }
+
+    .btn.mob-display {
+        position: absolute;
+        right: 5px;
+        top: 30px;
+        z-index: 9;
+    }
+
+    .btn.mob-display span {
+        width: 15px;
+        height: 2px;
+        display: block;
+        background: var(--secondary);
+        margin: 2px;
     }
 }

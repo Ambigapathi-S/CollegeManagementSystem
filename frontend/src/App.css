@@ -151,3 +151,7 @@ a.clickHere {
   color: var(--gray);
   font-weight: 500;
 }
+
+.mob-display {
+  display: none !important;
+}

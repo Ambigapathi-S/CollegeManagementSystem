@@ -24,7 +24,7 @@ const NavbarComponent = () => {
   return (
     <>
       {isAuth && (
-        <nav className="navbar-expand bg-primary">
+        <nav className="navbar-expand bg-primary" id="navbar">
           <div className="navbar-nav">
             <NavLink
               to="/dashboard"

@@ -17,7 +17,10 @@ const BorrowSchema = yup
   .shape({
     id: yup.string().notRequired(),
     issueDate: yup.date().required("Issue Date is Required!"),
-    dueDate: yup.date().min(yup.ref('issueDate'), 'Due date must be after Issue Date').required("Due Date is Required!"),
+    dueDate: yup
+      .date()
+      .min(yup.ref("issueDate"), "Due date must be after Issue Date")
+      .required("Due Date is Required!"),
     returnDate: yup.string().notRequired(),
     status: yup.string().required("Status is Required!"),
     book: yup.object().notRequired(),
@@ -138,7 +141,7 @@ const UpdateBorrowStatus = () => {
                   {...register("status")}
                   className={`form-control ${errors.status ? "error" : ""} `}
                 >
-                  <option value="pending">Pending</option>
+                  {isAdmin && <option value="pending">Pending</option>}
                   <option value="approved">Approved</option>
                   <option value="returned">Returned</option>
                 </select>

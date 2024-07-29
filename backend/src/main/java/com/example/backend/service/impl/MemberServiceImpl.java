@@ -83,12 +83,19 @@ public class MemberServiceImpl implements MemberService {
 
         String role = "ROLE_MEMBER";
         Member member = null;
+        Member loggedInUser = userOptional.get();
         if (userOptional.isPresent()) {
             member = userOptional.get();
         }
-        JwtMemberResponse jwtMemberResponse = new JwtMemberResponse();
-        jwtMemberResponse.setRole(role);
-        jwtMemberResponse.setMember(member);
-        return jwtMemberResponse;
+        if(userOptional.isPresent() && loggedInUser.getPhoneNumber().equals(memberLoginDto.getPhoneNumber())) {
+            JwtMemberResponse jwtMemberResponse = new JwtMemberResponse();
+            jwtMemberResponse.setRole(role);
+            jwtMemberResponse.setMember(member);
+            return jwtMemberResponse;
+        } else if (!userOptional.isPresent()) {
+            throw new ResourceNotFoundException("User" , "email", memberLoginDto.getEmail());
+        } else {
+            throw new ResourceNotFoundException("Incorrect Phone Number");
+        }
     }
 }
